@@ -32,8 +32,8 @@ socket.on("image", (info) => {
     var cvs = document.getElementById('canvas');
     var ctx = cvs.getContext('2d');
 
-    cvs.height = 3280;
-    cvs.width = 2464;
+    //cvs.height = 3280;
+    //cvs.width = 2464;
 
     console.log("Creating image...");
 
@@ -48,16 +48,16 @@ socket.on("image", (info) => {
     // link.innerHTML = info.imageName;
     // document.getElementById("imageLoadSection").appendChild(link);
 
-    link.addEventListener('click', function() {
-        link.href = cvs.toDataURL();
-        link.download = info.imageName;
-    }, false);
+    // link.addEventListener('click', function() {
+    //     link.href = cvs.toDataURL();
+    //     link.download = info.imageName;
+    // }, false);
 
     //link.click();
 
     // Then create thumbnail.
     console.log("Creating thumbnail...");
-    //new thumbnailer(cvs, img, 600, 3); //this produces lanczos3
+    new thumbnailer(cvs, img, 600, 3); //this produces lanczos3
 
     // ctx.drawImage(img, 0, 0);
   }
@@ -67,5 +67,5 @@ socket.on("image", (info) => {
 function callServer()
 {
     console.log("server called");
-    socket.emit('event', {my: 'data1234'});
+    socket.emit('photo_request', {my: 'data1234'});
 }

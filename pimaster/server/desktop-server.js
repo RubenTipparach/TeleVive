@@ -6,25 +6,19 @@
 *
 * NOTE: same as PI script, but ported over to PCs.
 */
-
 var app = require('express')();
 var server = require('http').createServer(app);
 var io = require('socket.io')(server);
 
- var fs = require('fs');
- var other_server = require("socket.io-client")('http://domain.com:8100'); // This is a client connecting to the SERVER 2
+var fs = require('fs');
+var NodeWebcam = require( "node-webcam" );
 
+// receiveing from a server <-> server
+io.sockets.on("connection", (socket) =>
+{
+    console.log("MASTER SERVER has connected");
 
-io.on('connection', (socket) => {
-    console.log("Servers connected");
-
-    // When we receive a message...
-    socket.on("message",function(data){
-        // We got a message... I dunno what we should do with this...
-    });
-
-    // original client trigger process.
-    socket.on( 'event',
+    socket.on( 'photo_request',
         (data) =>
         {
             console.log("recieved data: " + data.my);
@@ -34,13 +28,21 @@ io.on('connection', (socket) => {
 
             var date = new Date().toISOString().replace(/:/, '-').replace(/\..+/, '');
             var photoName = 'photo' + date + '.jpg';
-            var args = ['-o','photo'+date+'.jpg'];
+            
+            var opts = {
+                width: 1280,
+                height: 720,
+                delay: 0,
+                quality: 100,
+                output: "jpeg",
+                verbose: true
+            }
 
-            //var PHOTO_CMD = 'raspistill';
-            //spawn(PHOTO_CMD, args);
-            /*
-            * TODO: Add Windows WebCam logic here!
-            */
+            var Webcam = NodeWebcam.create( opts );
+
+            //Will automatically append location output type
+            Webcam.capture(photoName);
+
             console.log("Photo taken @ " + date);
             var msgPack = {my: "Photo taken @ " + date};
 
@@ -48,21 +50,21 @@ io.on('connection', (socket) => {
                 sendImage(photoName, socket);
             }, 10000);
 
-            // notify client that a photo has been taken.
             socket.emit('photo_taken', {msg: msgPack.my});
     });
 });
 
 function sendImage(photoName, socket)
 {
-    fs.readFile(photoName, function(err, data) {
+    fs.readFile(photoName, (err, data) => {
+
         if (err)
         {
              throw err; // Fail if the file can't be read.
         }
 
-        socket.emit('image', { image: true, buffer: data.toString('base64') });
+        socket.emit('image', { image: true, buffer: data.toString('base64'), imageName: photoName});
     });
 }
 
-server.listen(3000);
+server.listen(3001);

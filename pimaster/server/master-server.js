@@ -5,9 +5,13 @@
 * Will also be used for distributing image processing, and creating thumbnails for clients.
 * Will also host and manage 3D models for downloading and storage. Should probably run on a Mongo DB server.
 *
+* based on this: http://stackoverflow.com/questions/14118076/socket-io-server-to-server
+*
 * NOTE: This is also the policy server. All clients connect through here from now on!
 */
-var urlLink = 'http://192.168.0.22:3000';
+//var urlLink = 'http://192.168.0.22:3000'; // loop through this in the future.
+var urlLink = 'http://192.168.0.5:3001';
+
 var other_server = require("socket.io-client")(urlLink);
 
 var app = require('express')();
@@ -18,40 +22,54 @@ var fs = require('fs');
 var sharp = require('sharp');
 
 
-other_server.on("connect",function()
+other_server.on("connect", () =>
 {
     console.log("connection made from MASTER to PI SERVERS.") // TODO: Register Pi array through JSON script
-    other_server.on('message',function(data)
+
+    //looks like we have to register this event here too.
+    other_server.on('photo_request',(data) =>
     {
         // We received a message from Server 2
         // We are going to forward/broadcast that message to the "Lobby" room
         // TODO: Idk how to use a lobby system yet, but it does sound useful
-        io.to('lobby').emit('message',data);
+        //io.to('lobby').emit('photo_request',data);
+        console.log("lobby created");
+    });
+
+    // forward message from SERVERS to CLIENTS
+    other_server.on("photo_taken", (info) =>
+    {
+        console.log("photo taken!");
+        io.sockets.emit("photo_taken", info);
+    });
+
+    other_server.on('image',(info) =>
+    {
+        //emit to clients
+        io.sockets.emit("image", info);
     });
 });
 
-io.sockets.on("connection",function(socket){
+// Gets called every time a client connects here!
+io.sockets.on("connection", (socket) =>{
     // Display a connected message
     console.log("User-Client Connected!");
 
     // Lets force this connection into the lobby room.
     socket.join('lobby');
 
-    // Some roster/user management logic to track them
-    // This would be upto you to add :)
-
-    // When we receive a message...
-    socket.on("message",function(data){
-        // We need to just forward this message to our other guy
-        // We are literally just forwarding the whole data packet
-        other_server.emit("message",data);
+    // forward message from CLIENTS to SERVERS
+    socket.on("photo_request", (data) =>
+    {
+        console.log("photo request recieved " + data.my);
+        other_server.emit("photo_request",data);
     });
 
-    socket.on("disconnect",function(data){
-        // We need to notify Server 2 that the client has disconnected
-        other_server.emit("message","UD,"+socket.id);
-
-        // Other logic you may or may not want
-        // Your other disconnect code here
+    // termination events.
+    socket.on("disconnect", (data) =>
+    {
     });
 });
+
+
+server.listen(3000);
