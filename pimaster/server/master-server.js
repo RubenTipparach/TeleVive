@@ -10,9 +10,13 @@
 * NOTE: This is also the policy server. All clients connect through here from now on!
 */
 //var urlLink = 'http://192.168.0.22:3000'; // loop through this in the future.
-var urlLink = 'http://192.168.0.5:3001';
+//var urlLink = 'http://192.168.0.5:3001';
+//var other_server = require("socket.io-client")(urlLink);
 
-var other_server = require("socket.io-client")(urlLink);
+var urlLinks = [
+    'http://192.168.0.22:3000',
+    'http://192.168.0.5:3001'
+];
 
 var app = require('express')();
 var server = require('http').createServer(app);
@@ -21,35 +25,60 @@ var io = require('socket.io')(server);
 var fs = require('fs');
 var sharp = require('sharp');
 
+var camServer = require("socket.io-client");
 
-other_server.on("connect", () =>
+var other_servers = new Array(2);
+
+// iterate through all of them
+for (var i = 0; i < urlLinks.length; i++)
 {
-    console.log("connection made from MASTER to PI SERVERS.") // TODO: Register Pi array through JSON script
+    var link = urlLinks[i];
+    console.log("connecting to " + link);
 
-    //looks like we have to register this event here too.
-    other_server.on('photo_request',(data) =>
-    {
-        // We received a message from Server 2
-        // We are going to forward/broadcast that message to the "Lobby" room
-        // TODO: Idk how to use a lobby system yet, but it does sound useful
-        //io.to('lobby').emit('photo_request',data);
-        console.log("lobby created");
+    // it recycles. wow.
+    other_servers[i] = require("socket.io-client")(link, {
+        forceNew: true
     });
 
-    // forward message from SERVERS to CLIENTS
-    other_server.on("photo_taken", (info) =>
-    {
-        console.log("photo taken!");
-        io.sockets.emit("photo_taken", info);
-    });
+    var serverInst = other_servers[i];
 
-    other_server.on('image',(info) =>
+    serverInst.on("connect", () =>
     {
-        //emit to clients
-        io.sockets.emit("image", info);
-    });
-});
+        console.log("connection made from MASTER to PI SERVERS.") // TODO: Register Pi array through JSON script
 
+        //looks like we have to register this event here too.
+        serverInst.on('photo_request',(data) =>
+        {
+            // We received a message from Server 2
+            // We are going to forward/broadcast that message to the "Lobby" room
+            // TODO: Idk how to use a lobby system yet, but it does sound useful
+            //io.to('lobby').emit('photo_request',data);
+            console.log("lobby created");
+        });
+
+        // forward message from SERVERS to CLIENTS
+        serverInst.on("photo_taken", (info) =>
+        {
+            io.sockets.emit("photo_taken", info);
+        });
+
+        serverInst.on('image', (info) =>
+        {
+            //emit to clients
+            console.log("photo taken! " + info.imageName); // two of the same message recieved!
+            io.sockets.emit("image",  info);
+        });
+    });
+}
+
+function connectToDevices(linkServer, id)
+{
+
+}
+
+/*
+* Client Service section.
+*/
 // Gets called every time a client connects here!
 io.sockets.on("connection", (socket) =>{
     // Display a connected message
@@ -62,7 +91,12 @@ io.sockets.on("connection", (socket) =>{
     socket.on("photo_request", (data) =>
     {
         console.log("photo request recieved " + data.my);
-        other_server.emit("photo_request",data);
+
+        // how to differentiate.
+        for (var i = 0; i < urlLinks.length; i++)
+        {
+            other_servers[i].emit("photo_request", data);
+        }
     });
 
     // termination events.

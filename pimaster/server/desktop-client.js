@@ -25,12 +25,23 @@ socket.on('photo_taken', (data)=>
     // most likely a spooling icon will run while we wait for this.
     console.log("photo taken " + data.msg);
 })
+var canvasNumber = 0;
 
 // prepare image to be recieved and processed.
 socket.on("image", (info) => {
   if (info.image) {
-    var cvs = document.getElementById('canvas');
-    var ctx = cvs.getContext('2d');
+    //var cvs = document.getElementById('canvas');
+    //var ctx = cvs.getContext('2d');
+
+    var cvs = document.createElement('canvas');
+
+    cvs.id = 'canvas' + canvasNumber;
+    canvasNumber ++;
+
+    cvs.width = 800;
+    cvs.height = 600;
+
+    var ctx = cvs.getContext("2d");
 
     //cvs.height = 3280;
     //cvs.width = 2464;
@@ -57,9 +68,13 @@ socket.on("image", (info) => {
 
     // Then create thumbnail.
     console.log("Creating thumbnail...");
-    new thumbnailer(cvs, img, 600, 3); //this produces lanczos3
+    //document.getElementById("imageLoadSection").appendChild(link);
 
-    // ctx.drawImage(img, 0, 0);
+    // use node to resize pictures, this takes too long!
+    // new thumbnailer(cvs, img, 600, 3); //this produces lanczos3
+
+    document.getElementById("imageLoadSection").appendChild(cvs);
+    ctx.drawImage(img, 0, 0);
   }
 });
 

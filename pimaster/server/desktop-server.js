@@ -27,8 +27,8 @@ io.sockets.on("connection", (socket) =>
             var spawn = require("child_process").spawn;
 
             var date = new Date().toISOString().replace(/:/, '-').replace(/\..+/, '');
-            var photoName = 'photo' + date + '.jpg';
-            
+            var photoName = 'photo-PC-' + date + '.jpg';
+
             var opts = {
                 width: 1280,
                 height: 720,
