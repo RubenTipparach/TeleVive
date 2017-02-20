@@ -16,8 +16,9 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-    <script type="text/javascript" src="server/socket.io.js"></script>
-    <script type="text/javascript" src="server/DesktopClient.js"></script>
+    <script type="text/javascript" src="scripts/socket.io.js"></script>
+    <script type="text/javascript" src="scripts/thumbnailer.js"></script>
+    <script type="text/javascript" src="server/desktop-client.js"></script>
   <style>
 	  body {
 		  font: 20px Montserrat, sans-serif;
@@ -35,8 +36,8 @@
 		  color: #ffffff;
 	  }
 	  .bg-3 {
-		  background-color: #ffffff; /* White */
-		  color: #555555;
+		  background-color: #0F0F0F; /* black */
+		  color: #ffffff;
 	  }
 	  .bg-4 {
 		  background-color: #2f2f2f; /* Black Gray */
@@ -64,7 +65,7 @@
 
 	<!-- Navbar -->
 	<nav class="navbar navbar-default">
-	  <div class="container">
+	  <!-- <div class="container">
 		<div class="navbar-header">
 		  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
 			<span class="icon-bar"></span>
@@ -80,48 +81,46 @@
 			<li><a href="#">WHERE</a></li>
 		  </ul>
 		</div>
-	  </div>
+	  </div> -->
 	</nav>
 
 	<!-- First Container -->
 	<div class="container-fluid bg-1 text-center">
 	  <h3 class="margin">Welcome to TeleVive</h3>
-	  <img src="bird.jpg" class="img-responsive img-circle margin" style="display:inline" alt="Bird" width="350" height="350">
+	  <img src="images/vive1.jpg" class="img-responsive img-circle margin" style="display:inline" alt="Bird" width="350" height="350">
 	  <h3>Press this button to begin.</h3>
     <button type="button" class="btn btn-default" onclick="callServer();">Start</button>
 	</div>
 
 	<!-- Second Container -->
-	<div class="container-fluid bg-2 text-center">
+	<div class="container-fluid bg-2 text-center" id="imageLoadSection">
 	  <h3 class="margin">Image array will appear here!</h3>
-	  <canvas id="canvas" width="3280" height="2464"></canvas>
-	  <a href="#" class="btn btn-default btn-lg">
-		<span class="glyphicon glyphicon-search"></span> Search
-	  </a>
+	  <!-- <canvas id="canvas" width="3280" height="2464"></canvas> -->
+      <canvas id="canvas" width="1" height="1"></canvas>
 	</div>
 
 	<!-- Third Container (Grid) -->
 	<div class="container-fluid bg-3 text-center">
-	  <h3 class="margin">Where To Find Me?</h3><br>
+	  <h3 class="margin">About</h3><br>
 	  <div class="row">
 		<div class="col-sm-4">
-		  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-		  <img src="birds1.jpg" class="img-responsive margin" style="width:100%" alt="Image">
+		  <p>Step 1: Place subject in center of array.</p>
+		  <img src="images/tv-1.png" class="img-responsive margin" style="width:100%" alt="Image">
 		</div>
 		<div class="col-sm-4">
-		  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-		  <img src="birds2.jpg" class="img-responsive margin" style="width:100%" alt="Image">
+            <p>Step 2: Press the take picture button.</p>
+		    <img src="images/tv-2.png" class="img-responsive margin" style="width:100%" alt="Image">
 		</div>
 		<div class="col-sm-4">
-		  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-		  <img src="birds3.jpg" class="img-responsive margin" style="width:100%" alt="Image">
+            <p>Step 3: The 3D processed image will load into this page.</p>
+		  <img src="images/tv-3.png" class="img-responsive margin" style="width:100%" alt="Image">
 		</div>
 	  </div>
 	</div>
 
 	<!-- Footer -->
 	<footer class="container-fluid bg-4 text-center">
-	  <p>Bootstrap Theme Made By <a href="http://www.w3schools.com">www.w3schools.com</a></p>
+	  <p>Contact <a href="mailto:rubentipparach@gmail.com?Subject=Awesome%20Question" target="_top">rubentipparach@gmail.com</a></p>
 	</footer>
 
   </body>
