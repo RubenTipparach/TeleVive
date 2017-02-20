@@ -36,39 +36,31 @@ for (var i = 0; i < urlLinks.length; i++)
     console.log("connecting to " + link);
 
     // it recycles. wow.
-    other_servers[i] = require("socket.io-client")(link, {
+    var serverInst = require("socket.io-client")(link, {
         forceNew: true
     });
 
-    var serverInst = other_servers[i];
-
+    //var serverInst = other_servers[i];
     serverInst.on("connect", () =>
     {
         console.log("connection made from MASTER to PI SERVERS.") // TODO: Register Pi array through JSON script
 
-        //looks like we have to register this event here too.
-        serverInst.on('photo_request',(data) =>
-        {
-            // We received a message from Server 2
-            // We are going to forward/broadcast that message to the "Lobby" room
-            // TODO: Idk how to use a lobby system yet, but it does sound useful
-            //io.to('lobby').emit('photo_request',data);
-            console.log("lobby created");
-        });
-
-        // forward message from SERVERS to CLIENTS
-        serverInst.on("photo_taken", (info) =>
-        {
-            io.sockets.emit("photo_taken", info);
-        });
-
-        serverInst.on('image', (info) =>
-        {
-            //emit to clients
-            console.log("photo taken! " + info.imageName); // two of the same message recieved!
-            io.sockets.emit("image",  info);
-        });
     });
+
+    // forward message from SERVERS to CLIENTS
+    serverInst.on("photo_taken", (info) =>
+    {
+        io.sockets.emit("photo_taken", info);
+    });
+
+    serverInst.on('image', (info) =>
+    {
+        //emit to clients
+        console.log("photo taken! " + info.imageName); // two of the same message recieved!
+        io.sockets.emit("image",  info);
+    });
+
+    other_servers[i] = serverInst;
 }
 
 function connectToDevices(linkServer, id)

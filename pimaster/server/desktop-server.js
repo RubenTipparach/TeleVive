@@ -48,7 +48,7 @@ io.sockets.on("connection", (socket) =>
 
             setTimeout(() => {
                 sendImage(photoName, socket);
-            }, 10000);
+            }, 15000);
 
             socket.emit('photo_taken', {msg: msgPack.my});
     });
