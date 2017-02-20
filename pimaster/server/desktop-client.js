@@ -36,15 +36,15 @@ socket.on("image", (info) => {
     var cvs = document.createElement('canvas');
 
     cvs.id = 'canvas' + canvasNumber;
-    canvasNumber ++;
+    canvasNumber++;
 
-    cvs.width = 800;
-    cvs.height = 600;
+    //cvs.width = 800;
+    //cvs.height = 600;
 
     var ctx = cvs.getContext("2d");
 
-    //cvs.height = 3280;
-    //cvs.width = 2464;
+    cvs.height = 3280;
+    cvs.width = 2464;
 
     console.log("Creating image...");
 
@@ -71,7 +71,7 @@ socket.on("image", (info) => {
     //document.getElementById("imageLoadSection").appendChild(link);
 
     // use node to resize pictures, this takes too long!
-    // new thumbnailer(cvs, img, 600, 3); //this produces lanczos3
+    new thumbnailer(cvs, img, 600, 3); //this produces lanczos3
 
     document.getElementById("imageLoadSection").appendChild(cvs);
     ctx.drawImage(img, 0, 0);
