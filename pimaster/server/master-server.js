@@ -15,7 +15,9 @@
 
 var urlLinks = [
     'http://192.168.0.22:3000',
-    'http://192.168.0.5:3001'
+    'http://192.168.0.5:3001',
+    'http://192.168.0.7:3001',
+    'http://192.168.0.4:3001'
 ];
 
 var app = require('express')();
@@ -26,6 +28,7 @@ var fs = require('fs');
 var sharp = require('sharp');
 
 var camServer = require("socket.io-client");
+var filemanager = require('easy-file-manager');
 
 var other_servers = new Array(2);
 
@@ -35,6 +38,7 @@ for (var i = 0; i < urlLinks.length; i++)
     var link = urlLinks[i];
     console.log("connecting to " + link);
 
+    var dataLink = {link: link};
     // it recycles. wow.
     var serverInst = require("socket.io-client")(link, {
         forceNew: true
@@ -43,7 +47,7 @@ for (var i = 0; i < urlLinks.length; i++)
     //var serverInst = other_servers[i];
     serverInst.on("connect", () =>
     {
-        console.log("connection made from MASTER to PI SERVERS.") // TODO: Register Pi array through JSON script
+        console.log("connection made from MASTER to PI SERVERS." ); // TODO: Register Pi array through JSON script
 
     });
 
@@ -57,12 +61,36 @@ for (var i = 0; i < urlLinks.length; i++)
     {
         //emit to clients
         console.log("photo taken! " + info.imageName); // two of the same message recieved!
+        //writeImageToDisk("pics/" + info.imageName + ".jpg", info.buffer);
+
+        filemanager.upload("pics", info.imageName , info.buffer ,function(err){
+            if (err) console.log(err);
+        });
+
         io.sockets.emit("image",  info);
     });
 
     other_servers[i] = serverInst;
 }
 
+// write stuff to my hard drive
+function writeImageToDisk(path, buffer)
+{
+    fs.open(path, 'w', (err, fd) => {
+        if (err) {
+            throw 'error opening file: ' + err;
+        }
+
+        fs.write(fd, buffer, 0, buffer.length, null, function(err) {
+            if (err) throw 'error writing file: ' + err;
+            fs.close(fd, function() {
+                console.log('file written');
+            })
+        });
+    });
+}
+
+// idk what to do with this yet.
 function connectToDevices(linkServer, id)
 {
 

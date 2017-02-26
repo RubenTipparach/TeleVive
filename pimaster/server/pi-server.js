@@ -12,7 +12,7 @@ var io = require('socket.io')(server);
 var fs = require('fs');
 
 // receiveing from a server <-> server
-io.sockets.on("connection", (socket) =>
+io.sockets.on('connection', (socket) =>
 {
     console.log("MASTER SERVER has connected");
 
@@ -24,7 +24,7 @@ io.sockets.on("connection", (socket) =>
             // do other stuff like take a picture!
             var spawn = require("child_process").spawn;
 
-            var date = new Date().toISOString().replace(/:/, '-').replace(/\..+/, '');
+            var date = new Date().toISOString().replace(/:/g, '-').replace(/\..+/, '');
             var photoName = 'photo' + date + '.jpg';
             var args = ['-o','photo-PI-'+date+'.jpg'];
 

@@ -11,10 +11,10 @@ var server = require('http').createServer(app);
 var io = require('socket.io')(server);
 
 var fs = require('fs');
-var NodeWebcam = require( "node-webcam" );
+var NodeWebcam = require( 'node-webcam' );
 
 // receiveing from a server <-> server
-io.sockets.on("connection", (socket) =>
+io.sockets.on('connection', (socket) =>
 {
     console.log("MASTER SERVER has connected");
 
@@ -26,7 +26,7 @@ io.sockets.on("connection", (socket) =>
             // do other stuff like take a picture!
             var spawn = require("child_process").spawn;
 
-            var date = new Date().toISOString().replace(/:/, '-').replace(/\..+/, '');
+            var date = new Date().toISOString().replace(/:/g, '-').replace(/\..+/, '');
             var photoName = 'photo-PC-' + date + '.jpg';
 
             var opts = {
