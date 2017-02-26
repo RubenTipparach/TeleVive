@@ -25,8 +25,8 @@ io.sockets.on('connection', (socket) =>
             var spawn = require("child_process").spawn;
 
             var date = new Date().toISOString().replace(/:/g, '-').replace(/\..+/, '');
-            var photoName = 'photo' + date + '.jpg';
-            var args = ['-o','photo-PI-'+date+'.jpg'];
+            var photoName = 'photo-PC-' + date + '.jpg';
+            var args = ['-o','photo-PC-' + date + '.jpg'];
 
             var PHOTO_CMD = 'raspistill';
             spawn(PHOTO_CMD, args);
