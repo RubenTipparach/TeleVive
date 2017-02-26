@@ -71,3 +71,19 @@ function callServer()
     console.log("server called");
     socket.emit('photo_request', {my: 'data1234'});
 }
+
+
+function callServer2()
+{
+
+    for (var i = 0; i < 20; i++)
+    {
+        setTimeout(function () {    //  call a 3s setTimeout when the loop is called
+            console.log("server called");
+            socket.emit('photo_request', {my: 'data1234'});
+            var snd = new Audio("audio.wav"); // buffers automatically when created
+            snd.play();
+        }, 10000 * i);
+    }
+
+}
