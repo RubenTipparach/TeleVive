@@ -14,9 +14,10 @@
 //var other_server = require("socket.io-client")(urlLink);
 
 var urlLinks = [
-    'http://192.168.0.22:3000',
+    'http://192.168.0.23:3000'
+    //'http://192.168.0.22:3000',
     //'http://192.168.0.5:3001',
-//    'http://192.168.0.7:3001',
+    //'http://192.168.0.7:3001',
     //'http://192.168.0.4:3001'
 ];
 
@@ -25,7 +26,6 @@ var server = require('http').createServer(app);
 var io = require('socket.io')(server);
 
 var fs = require('fs');
-var sharp = require('sharp');
 
 var camServer = require("socket.io-client");
 var filemanager = require('easy-file-manager');
