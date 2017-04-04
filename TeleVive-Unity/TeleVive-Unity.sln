@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2015
+# Visual Studio 2017
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeleVive-Unity", "TeleVive-Unity.csproj", "{23F09AE1-83FE-626F-4B57-640B0E8E88CA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeleVive-Unity.Editor", "TeleVive-Unity.Editor.csproj", "{9324F706-5221-F802-8387-CA7B51A83B2B}"
