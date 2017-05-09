@@ -54,7 +54,7 @@
 	\\\\
 	The Oculus Rift and the HTC Vive released with in just a week with each other at the end of Q1 2016. These both saw moderate sales, both in roughly over half a million units. The Samsung VR selling the most by 2 million units, and the PS4 VR at nearly a million. This meant that the 2017 was predicted as the year that VR content becomes ubiquitous. With a wide range of technologies available, the tech industry and research institutions alike should embrace this new medium as a way to visualize and interact with data in the future.
 	\\\\
-	The HTC Vive is the main focus of this thesis. Development began back in 2012 with Valve and HTC began working separately on different VR projects. in wake of the announcement of the Oculus Rift's development and its affect on the entire tech industry when the famed Kickstarter campaign launched an entirely new industry in VR technology. By 2014, Valve's efforts in VR with Oulus came to a grinding halts as Oculus was aquired by Facebook. This led to Valve partnering with HTC to develop the ultimate room scale VR.
+	The HTC Vive is the main focus of this thesis. Development began back in 2012 with Valve and HTC began working separately on different VR projects\cite{Volpe}  \cite{Souppouris}. in wake of the announcement of the Oculus Rift's development and its affect on the entire tech industry when the famed Kickstarter campaign launched an entirely new industry in VR technology. By 2014, Valve's efforts in VR with Oulus came to a grinding halts as Oculus was aquired by Facebook. This led to Valve partnering with HTC to develop the ultimate room scale VR.
 	\\\\ 	%april tags
 	In early development, Valve used April tags, which are a simplified version of the QR tags to allow a headset with mounted LEDs to track room scale movement and display graphics in VR. This quickly became in feasible since the tracking wasn't precise enough. When Valve partnered with HTC to develop the Vive, the goal from the begining was to develop a headset capable of room scale tracking and allowing for a high level of fidelity.
 	\\\\
@@ -66,20 +66,23 @@
 	\subsection*{History of Photogrammetry}
 	Photogrammetry covers a wide range of disciplines in collecting data and converting it to a point cloud system that then allows the reconstruction of spatial data along with its textures. The method that will be discussed in this research mostly deals with the interactive media aspect of photogrammetry. Meaning the scanning of 3D objects at the scale that will allow users to interact with it.
 	\\\\
-	Although there is no clearly documented timescale for the capture of real life objects in video games, there is a clear trend that has been taking place in the last 20 or so years since the advent of GPU accelerated 3D rendering. This goes back to the late 90s and early 2000s when video cards had enough memory to process large volumes of texture data. This meant that polygons could be mapped to higher resolution images, and allow for more accurate looking objects. [probably need citation somewhere here.]
+	Although there is no clearly documented timescale for the capture of real life objects in video games, there is a clear trend that has been taking place in the last 20 or so years since the advent of GPU accelerated 3D rendering. This goes back to the late 90s and early 2000s when video cards had enough memory to process large volumes of texture data. This meant that polygons could be mapped to higher resolution images, and allow for more accurate looking objects.
 	\\\\
 	By the early 2000s games and 3D rendering technology had come a long, polygons could now be increased to a much higher amount. Although some games still had the character's faces and proportions incorrect. Laser scanning and photographic images helped to correct these errors by providing much more accurate 3D scanning data.
 	\\\\
-	Today 3D photogrammetry process are used to capture, in high detail, the likeness of celebrities and actors that would then be used in game. For example, many of EA game's sports titles use real life soccer players to be scanned into the game to portray an extremely accurate representation [cite]. Another more recent game title, Hideo Kojima's Death Stranding shows actors being scanned by a custom built rig and some of the best experts in the field of human likeness capture photographers in the world. [cite] This process invloves dozens of cameras mounted in elaborately built lighting studios to maximize the amount of detail and accuracy captured.
+	Today 3D photogrammetry process are used to capture, in high detail, the likeness of celebrities and actors that would then be used in game as well as preserve aging ancient artifacts \cite{Samann}. For example, many of EA game's sports titles use real life soccer players to be scanned into the game to portray an extremely accurate representation. Another more recent game title, Hideo Kojima's Death Stranding shows actors being scanned by a custom built rig and some of the best experts in the field of human likeness capture photographers in the world. This process invloves dozens of cameras mounted in elaborately built lighting studios to maximize the amount of detail and accuracy captured.
 	\\\\
-	However, it is not only humans that have received the grand treatment. For some time, games have also been trying to capture entire environments. One example is Crysis in 2007 [cite], sent out a team of photographers to capture a pictures in remote islands in the south pacific to capture exotic plants and animals to model the in game tropical island environment. This was a costly process and involved hundreds of thousands of photographs to be manually processed by artists and developed into 3D assets for in game use.
+	However, it is not only humans that have received the grand treatment. For some time, games have also been trying to capture entire environments. One example is Crysis in 2007, sent out a team of photographers to capture a pictures in remote islands in the south pacific to capture exotic plants and animals to model the in game tropical island environment. This was a costly process and involved hundreds of thousands of photographs to be manually processed by artists and developed into 3D assets for in game use.
 	\\\\
 	Another recent example of the video game photogrammetry is in Star Wars: Battlefront (2015) where artists were sent to remote environments like the volcanic and snowy terrariums of Iceland to capture some rare sceneries and textures to be recreated as assets for the game. This made Battlefront one of the best looking games of 2015, with nearly photo perfect realism coupled by a powerful rendering engine.
 	\\\\
-	With the photogrammetric techniques combined with low-cost Raspberry Pi tech [cite], this research aims to lower the cost of capturing real life objects and environments and convert them into immersive experiences that can be viewed inside of VR.
+	With the photogrammetric techniques combined with low-cost Raspberry Pi tech, this research aims to lower the cost of capturing real life objects and environments and convert them into immersive experiences that can be viewed inside of VR \cite{Pi3DScan}.
 	
-	\subsection*{A look into the Pi Array}
-
+	\subsection*{Raspberry Pi Scanner Arrays}
+	To save costs on building expensive camera rigs or setups, the Raspbery Pi offers a compact camera and computing system that is low cost and efficient for processing images in parallel to create an instant photogrammetry array. Large rigs can costs anywhere from \$20,000 to \$200,000 \cite{Straub2}, therefore alternatives for research must be taken to cut down on costs and still be able to achieve relatively accurate results.
+	\\\\
+	Pi Scanner arrays can be assembled with relatively cheap materials such as lighting stands or metal poles where the Pi cameras can be mounted. After that, the arrangement must be so that the user can enter the area and be scanned from the photography. Once the subject is scanned the rendering or mesh building software can be used. This is often either Agisoft's 3D scan application or Autodesk Recap 360.
+	
 	\section*{REFERENCES}
 	\begin{thebibliography}{99}
 
@@ -117,5 +120,28 @@ to Explore Non-Linear Drama in Virtual Worlds'',2001.}
         
         %https://www.engadget.com/2016/03/18/htc-vive-an-oral-history/
 
+	     \bibitem{Pi3DScan}{Pi3DScan, ''http://www.pi3dscan.com/'',2016.}
+
+		%	Characterization of a Large, Low-Cost 3D Scanner
+		\bibitem{Straub1}{Jeremy Straub. Benjamin Kading. Atif Mohammad and Scott Kerlin, ''Characterization of a Large, Low-Cost 3D Scanner'',2015.}
+		
+		%Development of a Large, Low-Cost, Instant 3D Scanner
+		\bibitem{Straub2}{Jeremy Straub and Scott Kerlin, ''Development of a Large, Low-Cost, Instant 3D Scanner'',2014.}
+		
+		\bibitem{Volpe}
+		Joseph Volpe,
+		\emph{A visual history of Valve's work in VR}.
+		\newline
+		\url{https://www.engadget.com/2015/03/04/a-history-of-valve-vr/},
+		2015.
+		
+		\bibitem{Souppouris}
+		Aaron Souppouris,
+		\emph{How HTC and Valve built the Vive}.
+		\newline
+		\url{https://www.engadget.com/2016/03/18/htc-vive-an-oral-history/},
+		2016.
+		
+		\bibitem{Samann}{Mariam Samaan, Marc Pierrot Deseillingy, and Raphae Le Heno, ''Close-Range Photogrammetric Tools for Epigraphic Surveys'',2016.}
     	\end{thebibliography}
 \end{document}
